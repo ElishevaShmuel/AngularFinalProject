@@ -1,0 +1,21 @@
+@for (c of courses; track c.id) {
+    <div>
+        <h2>{{ c.title }}</h2>
+        <p><strong>title:</strong> {{ c.title }}</p>
+        <p><strong>teacher:</strong> {{ c.teacherId }}</p>
+        <p><strong>description:</strong> {{ c.description }}</p>
+        @if (user.isIn) {
+            <button (click)="leaveCourse(c)">עזיבה</button>
+        } @else {
+            <button (click)="join(c)"\>הצטרפות</button>
+        }
+        @if (user.role === 'admin') {
+            <button (click)="deleteCourse(c)">Delete</button>
+        }
+        <a routerLink="/courses/:id" routerLinkActive="active">Lesson</a>
+    </div>
+}
+
+@if (user.role === 'admin') {
+    <button (click)="addCourse()">הוספה</button>
+}

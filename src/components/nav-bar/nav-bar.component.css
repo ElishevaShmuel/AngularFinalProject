@@ -1,0 +1,37 @@
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    z-index: 1000; /* Ensures the navbar stays above other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+}
+
+nav a {
+    display: inline-block;
+    padding: 14px 20px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    width: 25%; /* Adjusts the width of each link */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+nav a:hover {
+    background-color: #575757;
+}
+
+.active{
+    font-weight: bold;
+    color: #ff9800; /* Orange - gives a modern and vibrant look */
+    background-color: rgba(255, 152, 0, 0.1); /* Light orange background */
+    border-bottom: 3px solid #ff9800; /* Adds an underline effect */
+    padding: 5px 10px;
+    border-radius: 5px; /* Slightly rounded corners */
+    transition: all 0.3s ease-in-out;
+  }
+.active:hover {
+    color: white;
+    background-color: #ff9800;
+}
+  
