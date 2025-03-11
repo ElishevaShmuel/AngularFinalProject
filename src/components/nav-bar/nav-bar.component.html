@@ -1,8 +1,9 @@
 <div>
-    <nav>
-        <a routerLink="/home" routerLinkActive="active">Home</a>
-        <a routerLink="/courses" routerLinkActive="active">Courses</a>
-        <a routerLink="/login" routerLinkActive="active">Login</a>
-        <a routerLink="/register" routerLinkActive="active">Register</a>
-    </nav>
+    <mat-toolbar color="primary">
+        <a [routerLink]="['/home']" routerLinkActive="active">Home</a> |
+        <a [routerLink]="['/courses']" routerLinkActive="active">Courses</a> |
+        <a [routerLink]="['/login']" routerLinkActive="active">Login</a> |
+        <a [routerLink]="['/register']" routerLinkActive="active">Register</a>
+    </mat-toolbar>
 </div>
+<router-outlet></router-outlet> 

@@ -1,0 +1,28 @@
+/* Style for the lesson list component */
+.lesson-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lesson-list h2 {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.lesson-list h2:hover {
+    background-color: #f1f1f1;
+}
+
+.lesson-list h2 p {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.lesson-list h2 p:hover {
+    color: #007bff;
+}

@@ -8,11 +8,8 @@ import { LessonListComponent } from '../components/lesson-list/lesson-list.compo
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'home', component: HomeComponent },
-    { path: 'courses', component: CoursListComponent, 
-        children:[
-            {path: 'courses/:id', component: LessonListComponent}
-        ]
-    },
+    { path: 'courses', component: CoursListComponent },
+    {path: 'courses/:id', component: LessonListComponent},
     { path: 'login', component: LoginComponent,},
     { path: 'register', component: RegisterComponent },
     

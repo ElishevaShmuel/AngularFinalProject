@@ -18,41 +18,64 @@ import { AddLessonDialogComponent } from '../add-lesson-dialog/add-lesson-dialog
 export class LessonListComponent {
 
   constructor(public coursesServise: CourseService,
-    public userIn: AuthService,
     public TheUser: UserService,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private lessonService: LessonService,
+    private route: ActivatedRoute,
   ) { }
-
+  coursId!: number;
+  course: any;
   user: any;
   lessons: Lesson[] | undefined;
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      if (id) {
-        this.coursesServise.getCourseById(id).subscribe((data) => {
-          this.lessons = data.lessons;
-        });
-        this.userIn.userIn$.subscribe(data => {
-          this.user = data;
-        });
-      }
-    });
+    this.coursId = +this.route.snapshot.paramMap.get('id')!;
+    this.coursesServise.getCourseById(this.coursId).subscribe({
+      next: (response) => { this.course = response },
+      error: (e) => { }
+    })
+    
+    this.lessonService.getAllLessonsByCourseId(this.coursId).subscribe({
+      next: (response) => {
+        this.lessons = response
+        console.log(response);
+
+      },
+      error: (e) => { }
+    })
   }
   deleteLesson(l: Lesson) {
     this.lessons = this.lessons?.filter((lesson) => lesson.id !== l.id);
-    this.lessonService.deletelesson(l.id);
+    const courseId = this.activatedRoute.snapshot.paramMap.get('id');
+    if (courseId) {
+      this.lessonService.deleteLesson(Number(l.id), Number(courseId)).subscribe({
+          next: (response) => {
+            alert('✅' + response.message);
+          },
+          error: (e) => { alert('❌' + e.error.message); }
+        }
+      );
+    }
   }
   add() {
     const dialogRef = this.dialog.open(AddLessonDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const newLesson = new Lesson(result.id, result.title, result.teacherId, result.description);
+        const newLesson = new Lesson(result.id, result.title, result.courseId, result.content);
         this.lessons?.push(newLesson);
+        this.lessonService.addLesson(newLesson,Number(newLesson.courseId)).subscribe({
+          next: (response) => {
+            alert('✅' + response.message);
+          },
+          error: (e) => { alert('❌' + e.error.message); }
+        });
+        this.lessonService.getAllLessonsByCourseId(Number(newLesson.courseId)).subscribe((data) => {
+          this.lessons = data;
+        });
       }
     });
+
   }
   trackByIndex(index: number): number {
     return index + 1;

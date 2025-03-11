@@ -1,44 +1,70 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../../models/user/user.module';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-
+import { Observable } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
+import { response } from 'express';
+import { error, log } from 'console';
+import { Session } from 'inspector';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private url = "http://localhost:3000/api/users";
-
-  private usersSubject = new BehaviorSubject<User[]>([]);
-  users$ = this.usersSubject.asObservable();
-
-  private userSubject = new BehaviorSubject<User | null>(null);
-  user$ = this.userSubject.asObservable();
-
-  constructor(private http: HttpClient) { }
-
-  getUser() {
-    this.http.get<User[]>(this.url).subscribe(data => {
-      this.usersSubject.next(data); 
+  constructor(private http: HttpClient) {
+  }
+  getHeders() {
+    return new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json'
     });
   }
 
-  getUserById(id: string) {
-    this.http.get<User>(`${this.url}/${id}`).subscribe(data => {
-      this.userSubject.next(data);
-    });
+  register(user: User): Observable<any> {
+    return this.http.post<any>('http://localhost:3000/api/auth/register', user);
   }
 
-  putUser(user: User) {
-    this.http.put<User>(`${this.url}/${user.id}`, user).subscribe(data => {
-      this.userSubject.next(data);
-      this.getUser();
-    });
+  login(user: User): Observable<any> {
+    return this.http.post<any>('http://localhost:3000/api/auth/login', user);
   }
 
-  deleteUser(id: string) {
-    this.http.delete(`${this.url}/${id}`).subscribe(() => {
-      this.getUser(); 
-    });
+  saveToken(token: string) {
+
+    sessionStorage.setItem('token', token);
+  }
+
+  getToken() {
+    return sessionStorage.getItem('token');
+  }
+  getUserId() {
+    const token = this.getToken();
+    if (!token)
+      return null
+    const payload = JSON.parse(atob(token.split('.')[1])); // מפענח את ה-JWT
+    return payload.userId;
+  }
+
+  logout() {
+    sessionStorage.removeItem('token');
+  }
+
+  // getUserById(id:string):Observable<any>{
+  //   return this.http.post<any>('http://localhost:3000/api/users/:id',id)
+  // }
+
+  getUserName(): string {
+    const token = this.getToken();
+    // console.log(token);
+    if (!token) return '';
+    try {
+      const decodedToken: any = jwtDecode(token);
+      // console.log(decodedToken)
+      return decodedToken.userName;
+    }
+    catch (error) {
+      alert('שגיאה בפענוח ה-Token:');
+      return '';
+    }
   }
 }
+
+

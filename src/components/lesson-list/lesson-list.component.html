@@ -1,16 +1,16 @@
 @for (l of lessons; track l.id) {
-    <div>
+    <div lesson-list>
         <h2>{{ l.id }}</h2>
         <p><strong>title:</strong> {{ l.title }}</p>
         <p><strong>teacher:</strong> {{ l.courseId }}</p>
         <p><strong>content:</strong> {{ l.content }}</p>
-        @if (user.role === 'admin') {
+        
             <button (click)="deleteLesson(l)">Delete</button>
-        }
+        
     </div>
 }
 
-@if (user.role === 'admin') {
+
     <button (click)="add()">הוספה</button>
-}
+
 

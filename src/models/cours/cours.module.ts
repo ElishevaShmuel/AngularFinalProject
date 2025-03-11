@@ -7,7 +7,8 @@ export class Course {
       public teacherId: string,
       public description: string,
       public lessons:Lesson[] = [],
-      public students: string[] = []
+      public students: string[] = [],
+      public isEnrolled:boolean=false
       ) { }
 }
 

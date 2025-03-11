@@ -5,15 +5,17 @@ import { AddCourseDialogComponent } from '../add-course-dialog/add-course-dialog
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from '../../app/app.component';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserModule } from '@angular/platform-browser';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { app } from '../../../server';
+import { MatInputModule } from '@angular/material/input';
+
 @Component({
   selector: 'app-add-lesson-dialog',
   standalone: true,
-  imports: [BrowserModule,
+  imports: [
     ReactiveFormsModule,
-    BrowserModule,
+    MatInputModule,
     MatFormFieldModule,
   ],
   templateUrl: './add-lesson-dialog.component.html',

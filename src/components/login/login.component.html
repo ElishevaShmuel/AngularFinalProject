@@ -1,8 +1,8 @@
 <form #myForm="ngForm" (ngSubmit)="login(myForm)">
     <label for="userEmail">Useremail:</label>
-    <input [(ngModel)]="email" name="userEmail" #userEmail1="ngModel" required minlength="3">
-{{userEmail1.errors | json}}
-{{userEmail1.touched | json}}
+    <input [(ngModel)]="user.email" name="userEmail" #userEmail1="ngModel" required minlength="3">
+{{userEmail1.errors }}
+{{userEmail1.touched}}
     @if(userEmail1.touched && userEmail1.hasError('required')){
     <small class="error-invalid">name is required.</small>
     }
@@ -10,9 +10,9 @@
     <small class="error-invalid">email must be at least 3 characters long.</small>
     }
     <label for="password">Password:</label>
-    <input [(ngModel)]="password" name="userPassword" #userPassword1="ngModel" required >
-    {{userPassword1.errors | json}}
-    {{userPassword1.touched | json}}
+    <input [(ngModel)]="user.password" name="userPassword" #userPassword1="ngModel" required >
+    {{userPassword1.errors }}
+    {{userPassword1.touched }}
         @if(userPassword1.touched && userPassword1.hasError('required')){
         <small class="error-invalid">name is required.</small>
         }

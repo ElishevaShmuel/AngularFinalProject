@@ -2,20 +2,21 @@ import { Component, Input } from '@angular/core';
 import { AuthService } from '../../services/Auth/auth.service';
 import { User } from '../../models/user/user.module';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { UserService } from '../../services/Users/user.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [BrowserModule,ReactiveFormsModule],
+  imports: [ReactiveFormsModule,MatSelectModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
 
   userForm!: FormGroup;
- 
-  constructor(private fb: FormBuilder,public AuthServise:AuthService){}
+  roles: string[] = ['Admin', 'User', 'Guest'];
+  constructor(private fb: FormBuilder,public userService:UserService){}
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
@@ -30,8 +31,15 @@ export class RegisterComponent {
     return this.userForm!.controls;
   }
 
-  register() {
-    this.AuthServise.register(this.userForm.value as User);
-  }
 
+  register() {
+    const newUser: User = this.userForm.value;
+    this.userService.register(newUser).subscribe({
+      next: (response) => {
+        alert('✅' + response.message||'נרשמת בהצלחה');
+      },
+      error: (err) => { alert('❌ ERROR: ' + (err.error.message || 'משהו השתבש')) }
+    });
+    this.userService.login(this.userForm.value);
+  }
 }

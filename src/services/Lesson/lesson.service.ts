@@ -1,45 +1,25 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Lesson } from '../../models/lesson/lesson.module'; // Adjust the path as necessary
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserService } from '../Users/user.service';
+import { Lesson } from '../../models/lesson/lesson.module'; 
 
-
+@Injectable({
+  providedIn: 'root'
+})
 export class LessonService {
-private url = "http://localhost:3000/api/courses/:courseId/lessons";
-  lessons$ : Observable<Lesson[]> = new Observable<Lesson[]>();
 
-  constructor(private http:HttpClient) { }
-
-  getlessons() {
-    this.http.get<Lesson[]>(`${this.url}`).subscribe(data=>{
-      this.lessons$ = of(data);
-     });
+  constructor(private http: HttpClient, private userServise: UserService) { }
+  getAllLessonsByCourseId(courseId: number): Observable<any> {
+    return this.http.get<any>(`http://localhost:3000/api/courses/${courseId}/lessons`, { headers: this.userServise.getHeders() });
   }
-  getlessonById(id: string) {
-    const lesson =this.http.get<Lesson>(`${this.url}/${id}`).subscribe(
-      data => {
-        return data;
-      }
-    ); 
-    if (!lesson) {
-      throw new Error('course not found');
-    }
-    return lesson;
+  addLesson(lesson: Lesson, courseId: number): Observable<any> {
+    return this.http.post<any>(`http://localhost:3000/api/courses/${courseId}/lessons`, lesson,{ headers: this.userServise.getHeders() });
   }
-
-  putlesson(lesson: Lesson) {
-    this.http.put<Lesson>(`${this.url}/${lesson.id}`, lesson);
-    this.getlessons();
+  deleteLesson(idLesson: number,courseId:number): Observable<any> {
+    return this.http.delete<any>(`http://localhost:3000/api/courses/${courseId}/lessons/:${idLesson},`,{ headers: this.userServise.getHeders() })
   }
-  
-  postlesson(lesson: Lesson) {
-    this.http.post<Lesson>(`${this.url}`, lesson);
-    this.getlessons();
+  updateLesson(courseId: number,lesson:Lesson): Observable<any> {
+    return this.http.put<any>(`http://localhost:3000/api/courses/:${lesson.id}/lessons/:${courseId}`,lesson,{ headers: this.userServise.getHeders() })
   }
-
-  deletelesson(id: string) {
-    this.http.delete<Lesson>(`${id}`);
-    this.getlessons();
-  }
-  
 }

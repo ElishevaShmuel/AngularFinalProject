@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,7 +13,7 @@ export class AppModule { }
   selector: 'app-add-course-dialog',
   standalone: true,
   imports: [
-    BrowserModule,
+    
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

@@ -1,24 +1,24 @@
-<form [formGroup]="userForm" (ngSubmit)="register()">
+<form class="register-container register-form" [formGroup]="userForm" (ngSubmit)="register()">
     <label for="name">Username:</label>
     <input id="name" formControlName="name" required>
+  
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password" required>
+  
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" required>
+  
+    <label for="role">Role:</label>
+    <mat-form-field appearance="fill">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role" required>
+        <mat-option value="admin">Admin</mat-option>
+        <mat-option value="student">Student</mat-option>
+        <mat-option value="teacher">Teacher</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <label for="password">password:</label>
-    <input id="password" formControlName="password" required>
-
-    <label for="email">email:</label>
-    <input id="email" formControlName="email" required>
-
-    <label for="role">role:</label>
-    <input id="role" formControlName="role" required>
-
-    @if (f['email'] && f['email'].errors && f['email'].touched) {
-        @if (f['email'].errors['required']) {
-            <div>email is required</div>
-        }
-        @if (f['email'].errors['minlength']) {
-            <div>email is required</div>
-        }
-    }
-
-    <button type="submit" [disabled]="userForm.invalid">register</button>
-</form>
+  
+    <button type="submit" >Register</button>
+  </form>
+  
