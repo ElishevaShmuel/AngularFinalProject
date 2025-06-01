@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AngularClient": {
+    "TheCoursOfTheLife": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-client",
+            "outputPath": "dist/the-cours-of-the-life",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -28,6 +28,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -42,8 +43,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
                 }
               ],
               "outputHashing": "all",
@@ -62,14 +63,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "AngularClient:build"
+            "browserTarget": "TheCoursOfTheLife:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "AngularClient:build:production"
+              "browserTarget": "TheCoursOfTheLife:build:production"
             },
             "development": {
-              "browserTarget": "AngularClient:build:development"
+              "browserTarget": "TheCoursOfTheLife:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -93,6 +94,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -102,6 +104,6 @@
     }
   },
   "cli": {
-    "analytics": "237c1cba-23f6-4774-9f84-a987ff5f6900"
+    "analytics": "5b256155-e026-4933-ae90-5fec25335f93"
   }
 }
